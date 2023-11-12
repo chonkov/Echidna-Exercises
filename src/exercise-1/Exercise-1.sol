@@ -35,19 +35,8 @@ contract Token is Ownable, Pausable {
     mapping(address => uint256) public balances;
 
     function transfer(address to, uint256 value) public whenNotPaused {
+        require(balances[msg.sender] >= value, "Undeflow");
         balances[msg.sender] -= value;
         balances[to] += value;
-    }
-}
-
-contract TestToken is Token {
-    address echidna = tx.origin;
-
-    constructor() {
-        balances[echidna] = 10000;
-    }
-
-    function echidna_test_balance() public view returns (bool) {
-        // TODO: add the property
     }
 }
