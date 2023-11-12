@@ -35,7 +35,8 @@ contract Token is Ownable, Pausable {
     mapping(address => uint256) public balances;
 
     function transfer(address to, uint256 value) public whenNotPaused {
-        require(balances[msg.sender] >= value, "Undeflow");
+        require(balances[msg.sender] >= value, "Underflow");
+        require(balances[to] + value < type(uint256).max, "Overflow");
 
         balances[msg.sender] -= value;
         balances[to] += value;
